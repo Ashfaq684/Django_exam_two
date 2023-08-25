@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="width: 100%; margin: auto">
+    <div class="purple-box text-center py-2">
+        <h1 class="mb-0">Tasks</h1>
+    </div>
+
+    {% if tasks %}
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            {% if not task.is_completed %}
+            <tr>
+                <td>{{ task.taskTitle }}</td>
+                <td>{{ task.taskDescription }}</td>
+                <td>Incomplete</td>
+                <td>
+                    <a href="{% url 'delete_task' task.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    <a href="{% url 'edit_task' task.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'complete_task' task.id %}" class="btn btn-success btn-sm">Complete</a>
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h3 class="mt-4">No Tasks available</h3>
+    {% endif %}
+</div>
+
+<style>
+.purple-box {
+    background-color: hsl(255, 60%, 30%);
+    color: white;
+}
+</style>
+
+{% endblock %}
